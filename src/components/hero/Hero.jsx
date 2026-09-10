@@ -5,7 +5,7 @@ import { NetworkCanvas } from './NetworkCanvas';
 import { ArrowRight, ArrowDown, Globe, Sparkles, ExternalLink } from 'lucide-react';
 
 export const Hero = () => {
-  const { openApplication, openIwaju, openCaseStudy, projects } = useApp();
+  const { openApplication, openIwaju, openCaseStudy, projects, setTab } = useApp();
   const [activePreviewIndex, setActivePreviewIndex] = useState(0);
 
   const previewShowcases = [
@@ -35,13 +35,6 @@ export const Hero = () => {
     }
   ];
 
-  const handleScrollToWork = () => {
-    const workSection = document.querySelector('#work');
-    if (workSection) {
-      workSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   const handlePreviewClick = (projId) => {
     const proj = projects.find(p => p.id === projId);
     if (proj) {
@@ -61,7 +54,7 @@ export const Hero = () => {
         
         {/* Minimalist Iwaju Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-300 backdrop-blur-md transition-colors hover:border-white/20 cursor-pointer"
-             onClick={openIwaju}>
+             onClick={() => setTab('iwaju')}>
           <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan" />
           <span className="text-slate-400">Powered by</span>
           <span className="font-semibold text-white">Iwaju</span>
@@ -91,7 +84,7 @@ export const Hero = () => {
           </button>
 
           <button
-            onClick={handleScrollToWork}
+            onClick={() => setTab('work')}
             className="w-full sm:w-auto px-7 py-3.5 rounded-full font-medium text-xs uppercase tracking-wider text-slate-300 bg-white/[0.03] border border-white/[0.08] hover:border-white/20 hover:text-white transition-all duration-200 backdrop-blur-md flex items-center justify-center gap-2"
           >
             <span>View Our Work</span>

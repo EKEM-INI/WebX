@@ -3,7 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { Menu, X, ArrowUpRight, Terminal } from 'lucide-react';
 
 export const Navbar = () => {
-  const { openApplication, openIwaju, toggleAdmin } = useApp();
+  const { openApplication, openIwaju, toggleAdmin, currentTab, setTab } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -16,20 +16,17 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Work', href: '#work' },
-    { name: 'Why WebX', href: '#why-webx' },
-    { name: 'Process', href: '#process' },
-    { name: 'AI + Tech', href: '#technology' },
-    { name: 'Clients', href: '#clients' }
+    { name: 'Services', tab: 'services' },
+    { name: 'Work', tab: 'work' },
+    { name: 'Why WebX', tab: 'why' },
+    { name: 'Process', tab: 'process' },
+    { name: 'AI + Tech', tab: 'technology' },
+    { name: 'Clients', tab: 'clients' }
   ];
 
-  const handleNavClick = (href) => {
+  const handleNavClick = (tabId) => {
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    setTab(tabId);
   };
 
   return (
@@ -44,9 +41,9 @@ export const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a
-              href="#"
-              className="flex items-center gap-3 group focus:outline-none"
+            <button
+              onClick={() => setTab('overview')}
+              className="flex items-center gap-3 group focus:outline-none text-left"
             >
               <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-white transition-colors group-hover:border-cyber-cyan/50">
                 <svg className="w-4 h-4" viewBox="0 0 32 32" fill="none">
@@ -62,22 +59,33 @@ export const Navbar = () => {
                   by Iwaju
                 </span>
               </div>
-            </a>
+            </button>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link.href)}
-                  className="px-3.5 py-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors rounded-full hover:bg-white/[0.05]"
-                >
-                  {link.name}
-                </button>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = currentTab === link.tab;
+                return (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavClick(link.tab)}
+                    className={`px-3.5 py-1.5 text-xs font-medium transition-colors rounded-full ${
+                      isActive
+                        ? 'bg-white text-obsidian-950 font-semibold'
+                        : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                    }`}
+                  >
+                    {link.name}
+                  </button>
+                );
+              })}
               <button
-                onClick={openIwaju}
-                className="px-3.5 py-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors rounded-full hover:bg-white/[0.05] flex items-center gap-1"
+                onClick={() => setTab('iwaju')}
+                className={`px-3.5 py-1.5 text-xs font-medium transition-colors rounded-full flex items-center gap-1 ${
+                  currentTab === 'iwaju'
+                    ? 'bg-white text-obsidian-950 font-semibold'
+                    : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                }`}
               >
                 <span>Iwaju</span>
                 <ArrowUpRight className="w-3 h-3 text-slate-500" />
@@ -133,8 +141,10 @@ export const Navbar = () => {
             {navLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => handleNavClick(link.href)}
-                className="block w-full text-left py-2.5 text-lg font-medium text-slate-200 hover:text-white border-b border-white/[0.05]"
+                onClick={() => handleNavClick(link.tab)}
+                className={`block w-full text-left py-2.5 text-lg font-medium border-b border-white/[0.05] ${
+                  currentTab === link.tab ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
+                }`}
               >
                 {link.name}
               </button>
@@ -142,7 +152,7 @@ export const Navbar = () => {
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                openIwaju();
+                setTab('iwaju');
               }}
               className="w-full text-left py-2.5 text-lg font-medium text-slate-400 hover:text-white flex items-center justify-between border-b border-white/[0.05]"
             >

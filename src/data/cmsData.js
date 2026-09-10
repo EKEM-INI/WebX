@@ -19,7 +19,7 @@ export const BRAND_CONFIG = {
   supportPhone: "+234 (0) 800 WEBX IWAJU",
   location: "Lagos • Nairobi • Global Delivery",
   socials: {
-    x: "https://x.com/webx_iwaju",
+    x: "https://x.com/iwajuofficial?s=20",
     instagram: "https://www.instagram.com/iwajuofficial?stkn=MTF5cjZsbnNhZGtxaw==",
     linkedin: "https://linkedin.com/company/webx-iwaju",
     github: "https://github.com/iwaju"

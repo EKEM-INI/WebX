@@ -15,6 +15,41 @@ export const AppProvider = ({ children }) => {
   const [activeCaseStudy, setActiveCaseStudy] = useState(null);
   const [isIwajuModalOpen, setIsIwajuModalOpen] = useState(false);
   const [isAdminDrawerOpen, setIsAdminDrawerOpen] = useState(false);
+  // Section Tab Navigation
+  const validTabs = ['overview', 'services', 'work', 'why', 'process', 'technology', 'clients', 'iwaju', 'apply'];
+
+  const getInitialTab = () => {
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    return validTabs.includes(hash) ? hash : 'overview';
+  };
+
+  const [currentTab, setCurrentTabState] = useState(getInitialTab);
+
+  const setTab = (tabId, scroll = true) => {
+    const target = validTabs.includes(tabId) ? tabId : 'overview';
+    setCurrentTabState(target);
+    if (target === 'overview') {
+      history.pushState(null, '', window.location.pathname);
+    } else {
+      window.location.hash = target;
+    }
+    if (scroll) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (validTabs.includes(hash)) {
+        setCurrentTabState(hash);
+      } else if (!hash) {
+        setCurrentTabState('overview');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   // Dynamic CMS state (persisted locally so edits survive page refresh)
   const [metrics, setMetrics] = useState(() => {
@@ -137,6 +172,9 @@ export const AppProvider = ({ children }) => {
         activeCaseStudy,
         isIwajuModalOpen,
         isAdminDrawerOpen,
+        currentTab,
+        setTab,
+        validTabs,
         metrics,
         projects,
         testimonials,

@@ -4,14 +4,7 @@ import { BRAND_CONFIG } from '../../data/cmsData';
 import { Terminal, ArrowUpRight } from 'lucide-react';
 
 export const Footer = () => {
-  const { openApplication, openIwaju, toggleAdmin } = useApp();
-
-  const handleScroll = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const { openApplication, openIwaju, toggleAdmin, setTab } = useApp();
 
   return (
     <footer className="relative bg-obsidian-950 border-t border-white/[0.06] pt-20 pb-12 overflow-hidden">
@@ -45,47 +38,47 @@ export const Footer = () => {
           {/* Column 2: Navigation */}
           <div>
             <div className="text-[11px] font-mono uppercase tracking-widest text-slate-300 font-semibold mb-3">
-              Navigation
+              Sections
             </div>
             <ul className="space-y-2 text-xs">
               <li>
                 <button
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  onClick={() => setTab('overview')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Home
+                  Overview
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('#services')}
+                  onClick={() => setTab('services')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Services
+                  What We Build
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('#work')}
+                  onClick={() => setTab('work')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Our Work
+                  Selected Work
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('#process')}
+                  onClick={() => setTab('process')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Process
+                  Delivery Process
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => openApplication('Business Website')}
+                  onClick={() => setTab('apply')}
                   className="text-white hover:underline transition-colors flex items-center gap-1"
                 >
-                  <span>Apply for Build</span>
+                  <span>Apply / Intake</span>
                   <ArrowUpRight className="w-3 h-3 text-slate-400" />
                 </button>
               </li>
@@ -100,7 +93,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-xs">
               <li>
                 <button
-                  onClick={openIwaju}
+                  onClick={() => setTab('iwaju')}
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-1"
                 >
                   <span>About Iwaju</span>
@@ -109,15 +102,15 @@ export const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('#technology')}
+                  onClick={() => setTab('technology')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  AI + Tech
+                  AI + Tech Radar
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('#clients')}
+                  onClick={() => setTab('clients')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
                   Client Sectors
@@ -125,7 +118,7 @@ export const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => handleScroll('#why-webx')}
+                  onClick={() => setTab('why')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
                   Why WebX
@@ -159,7 +152,19 @@ export const Footer = () => {
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
-                  <span>@iwajuofficial</span>
+                  <span>Instagram: @iwajuofficial</span>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={BRAND_CONFIG.socials.x}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-300"
+                >
+                  <span className="font-bold text-xs text-slate-400 font-mono">𝕏</span>
+                  <span>X (Twitter): @iwajuofficial</span>
                   <ArrowUpRight className="w-3 h-3 text-slate-500" />
                 </a>
               </li>
