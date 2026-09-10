@@ -1,27 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { BRAND_CONFIG } from '../../data/cmsData';
-import { PoweredByIwajuBadge } from '../common/Badge';
 import { NetworkCanvas } from './NetworkCanvas';
-import { ArrowRight, ArrowDown, Code2, Globe, Cpu, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ArrowDown, Globe, Sparkles, ExternalLink } from 'lucide-react';
 
 export const Hero = () => {
-  const { openApplication, openIwaju } = useApp();
-  const [pipelineStep, setPipelineStep] = useState(0);
+  const { openApplication, openIwaju, openCaseStudy, projects } = useApp();
+  const [activePreviewIndex, setActivePreviewIndex] = useState(0);
 
-  const pipelineStages = [
-    { label: "Architecture", status: "Compiled", code: "Next.js 15 • Edge Node" },
-    { label: "Design System", status: "Synchronized", code: "Figma Tokens • Tailwind v3.4" },
-    { label: "AI Automation", status: "Active", code: "Lead Assistant • 24/7 Agent" },
-    { label: "Global Edge", status: "Deployed", code: "300+ PoPs • 0.35s TTFB" }
+  const previewShowcases = [
+    {
+      title: "Aurora Reserve",
+      tag: "Culinary & Hospitality",
+      url: "aurora-reserve.com",
+      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
+      stat: "+240% Direct Bookings",
+      projectId: "aurora-culinary"
+    },
+    {
+      title: "Apex Horizon Capital",
+      tag: "Private Equity",
+      url: "apexcapital.africa",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+      stat: "$180M+ Assets Represented",
+      projectId: "apex-capital"
+    },
+    {
+      title: "Lumina Botanics",
+      tag: "Headless E-commerce",
+      url: "luminabotanics.co",
+      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop",
+      stat: "3.8% Conversion Rate",
+      projectId: "lumina-botanics"
+    }
   ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPipelineStep((prev) => (prev + 1) % pipelineStages.length);
-    }, 3200);
-    return () => clearInterval(timer);
-  }, [pipelineStages.length]);
 
   const handleScrollToWork = () => {
     const workSection = document.querySelector('#work');
@@ -30,182 +42,151 @@ export const Hero = () => {
     }
   };
 
+  const handlePreviewClick = (projId) => {
+    const proj = projects.find(p => p.id === projId);
+    if (proj) {
+      openCaseStudy(proj);
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950">
-      {/* Background canvas */}
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950">
+      {/* Delicate background canvas */}
       <NetworkCanvas />
 
-      {/* Atmospheric ambient glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyber-cyan/10 blur-[130px] rounded-full pointer-events-none animate-orb-1" />
-      <div className="absolute bottom-1/3 right-1/4 w-[28rem] h-[28rem] bg-cyber-violet/10 blur-[150px] rounded-full pointer-events-none animate-orb-2" />
+      {/* Atmospheric breathing soft aura */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[45rem] h-[45rem] bg-gradient-to-b from-cyber-cyan/[0.08] to-cyber-violet/[0.04] blur-[160px] pointer-events-none rounded-full animate-ambient" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* Left Column: Core Value Proposition */}
-          <div className="lg:col-span-7 text-center lg:text-left space-y-7">
-            
-            {/* Powered by Iwaju badge */}
-            <div className="flex justify-center lg:justify-start">
-              <PoweredByIwajuBadge onClick={openIwaju} />
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold font-display tracking-tight text-white leading-[1.08]">
-              WE BUILD THE WEB <br className="hidden sm:inline" />
-              <span className="text-gradient-cyan">
-                FOR WHAT'S NEXT.
-              </span>
-            </h1>
-
-            {/* Supporting Copy */}
-            <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              {BRAND_CONFIG.supportingText}
-            </p>
-
-            {/* Dual CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-              <button
-                onClick={() => openApplication('Business Website')}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-sm text-obsidian-950 bg-cyber-cyan hover:bg-white transition-all duration-300 shadow-glow-cyan/50 hover:shadow-glow-cyan flex items-center justify-center gap-3 group active:scale-[0.98]"
-              >
-                <span>Build With WebX</span>
-                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-              </button>
-
-              <button
-                onClick={handleScrollToWork}
-                className="w-full sm:w-auto px-7 py-4 rounded-xl font-medium text-sm text-slate-200 bg-obsidian-900/80 border border-white/10 hover:border-cyber-cyan/40 hover:text-white transition-all duration-300 backdrop-blur-md flex items-center justify-center gap-2 hover:bg-white/5"
-              >
-                <span>View Our Work</span>
-                <ArrowDown className="w-4 h-4 text-cyber-cyan" />
-              </button>
-            </div>
-
-            {/* Quick Micro-Ticker */}
-            <div className="pt-4 border-t border-white/5 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-6 text-xs font-mono text-slate-400">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyber-cyan" />
-                <span>Zero Templates</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyber-cyan" />
-                <span>Sub-Second Speed</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyber-cyan" />
-                <span>AI + Automation Ready</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Simulated Live Digital Infrastructure Display */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-2xl bg-obsidian-900/80 border border-cyber-cyan/20 p-5 sm:p-6 backdrop-blur-2xl shadow-2xl shadow-black/80">
-              
-              {/* Window Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-mono text-slate-400">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 text-slate-300">webx-pipeline.sh</span>
-                </div>
-                <div className="flex items-center gap-2 text-cyber-cyan">
-                  <span className="w-2 h-2 rounded-full bg-cyber-cyan animate-ping" />
-                  <span>LIVE DEPLOY</span>
-                </div>
-              </div>
-
-              {/* Pipeline Real-time Stepper */}
-              <div className="py-5 space-y-4">
-                <div className="text-[11px] font-mono uppercase tracking-widest text-slate-400">
-                  Automated Digital Infrastructure Pipeline
-                </div>
-
-                <div className="space-y-2.5">
-                  {pipelineStages.map((stage, idx) => {
-                    const isActive = idx === pipelineStep;
-                    const isDone = idx < pipelineStep;
-                    return (
-                      <div
-                        key={stage.label}
-                        className={`p-3 rounded-xl border transition-all duration-300 font-mono text-xs flex items-center justify-between ${
-                          isActive
-                            ? 'bg-cyber-cyan/10 border-cyber-cyan text-white shadow-glow-cyan/20'
-                            : isDone
-                            ? 'bg-obsidian-850/60 border-emerald-500/30 text-slate-300'
-                            : 'bg-obsidian-950/40 border-white/5 text-slate-500'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span
-                            className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                              isActive
-                                ? 'bg-cyber-cyan text-obsidian-950'
-                                : isDone
-                                ? 'bg-emerald-500/20 text-emerald-400'
-                                : 'bg-white/5 text-slate-600'
-                            }`}
-                          >
-                            {idx + 1}
-                          </span>
-                          <div>
-                            <div className="font-semibold text-slate-200">{stage.label}</div>
-                            <div className="text-[10px] text-slate-400">{stage.code}</div>
-                          </div>
-                        </div>
-
-                        <span
-                          className={`text-[11px] px-2 py-0.5 rounded ${
-                            isActive
-                              ? 'bg-cyber-cyan/20 text-cyber-cyan'
-                              : isDone
-                              ? 'text-emerald-400'
-                              : 'text-slate-600'
-                          }`}
-                        >
-                          {isActive ? 'Processing...' : stage.status}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Mini Terminal Output Box */}
-              <div className="rounded-lg bg-obsidian-950 p-3 font-mono text-[11px] text-slate-400 border border-white/5 space-y-1">
-                <div className="flex items-center justify-between text-slate-500 text-[10px]">
-                  <span>DEPLOYMENT METRICS</span>
-                  <span className="text-emerald-400">LATENCY: 14MS</span>
-                </div>
-                <div className="text-cyber-cyan truncate">
-                  &gt; webx deploy --client=&quot;production&quot; --mode=ultra-fast
-                </div>
-                <div className="text-slate-300 truncate">
-                  ✔ SSL verified • CDN propagation 100% • AI assistant ready
-                </div>
-              </div>
-
-              {/* Floating Technology Badges */}
-              <div className="absolute -bottom-4 -left-4 px-3 py-1.5 rounded-lg bg-obsidian-900 border border-cyber-cyan/30 text-[10px] font-mono text-cyber-cyan shadow-xl flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Zero Downtime SLA</span>
-              </div>
-            </div>
-          </div>
-
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10 text-center space-y-8">
+        
+        {/* Minimalist Iwaju Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-300 backdrop-blur-md transition-colors hover:border-white/20 cursor-pointer"
+             onClick={openIwaju}>
+          <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan" />
+          <span className="text-slate-400">Powered by</span>
+          <span className="font-semibold text-white">Iwaju</span>
+          <span className="text-slate-600">•</span>
+          <span className="text-slate-400 text-[11px]">Digital Infrastructure</span>
         </div>
-      </div>
 
-      {/* Down arrow anchor */}
-      <button
-        onClick={handleScrollToWork}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 p-2 rounded-full text-slate-500 hover:text-cyber-cyan transition-colors hidden md:block animate-bounce"
-        aria-label="Scroll down"
-      >
-        <ArrowDown className="w-5 h-5" />
-      </button>
+        {/* Clean, Bold Headline */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-white leading-[1.08] max-w-4xl mx-auto">
+          WE BUILD THE WEB <br />
+          <span className="text-gradient-cyan">FOR WHAT'S NEXT.</span>
+        </h1>
+
+        {/* Supporting Copy */}
+        <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+          {BRAND_CONFIG.supportingText}
+        </p>
+
+        {/* Dual CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <button
+            onClick={() => openApplication('Business Website')}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider text-obsidian-950 bg-white hover:bg-slate-200 transition-all duration-200 shadow-lg shadow-white/5 active:scale-[0.98] flex items-center justify-center gap-2 group"
+          >
+            <span>Build With WebX</span>
+            <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" />
+          </button>
+
+          <button
+            onClick={handleScrollToWork}
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full font-medium text-xs uppercase tracking-wider text-slate-300 bg-white/[0.03] border border-white/[0.08] hover:border-white/20 hover:text-white transition-all duration-200 backdrop-blur-md flex items-center justify-center gap-2"
+          >
+            <span>View Our Work</span>
+            <ArrowDown className="w-3.5 h-3.5 text-slate-400" />
+          </button>
+        </div>
+
+        {/* Minimalist Interactive Showcase Frame */}
+        <div className="pt-8 max-w-4xl mx-auto">
+          {/* Showcase Tabs */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            {previewShowcases.map((showcase, idx) => (
+              <button
+                key={showcase.title}
+                onClick={() => setActivePreviewIndex(idx)}
+                className={`px-3.5 py-1 rounded-full text-xs font-mono transition-all ${
+                  idx === activePreviewIndex
+                    ? 'bg-white/10 text-white border border-white/20'
+                    : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                {showcase.title}
+              </button>
+            ))}
+          </div>
+
+          {/* Minimalist Device Viewport */}
+          <div
+            onClick={() => handlePreviewClick(previewShowcases[activePreviewIndex].projectId)}
+            className="relative rounded-2xl bg-obsidian-900/60 border border-white/[0.08] hover:border-white/20 p-2 sm:p-3 backdrop-blur-2xl transition-all duration-500 cursor-pointer group shadow-2xl overflow-hidden"
+          >
+            {/* Top Browser Pill Bar */}
+            <div className="px-4 py-2 bg-obsidian-950/70 rounded-xl border border-white/[0.04] flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-white/20" />
+                <div className="w-2 h-2 rounded-full bg-white/20" />
+                <div className="w-2 h-2 rounded-full bg-white/20" />
+              </div>
+              <div className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+                <Globe className="w-3 h-3 text-cyber-cyan" />
+                <span>https://{previewShowcases[activePreviewIndex].url}</span>
+              </div>
+              <span className="text-[10px] font-mono text-cyber-cyan flex items-center gap-1">
+                <span>{previewShowcases[activePreviewIndex].stat}</span>
+                <ExternalLink className="w-3 h-3" />
+              </span>
+            </div>
+
+            {/* Viewport Image */}
+            <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-obsidian-950">
+              <img
+                src={previewShowcases[activePreviewIndex].image}
+                alt={previewShowcases[activePreviewIndex].title}
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/80 via-transparent to-transparent" />
+              
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-mono text-slate-400">
+                    {previewShowcases[activePreviewIndex].tag}
+                  </div>
+                  <div className="text-base font-bold text-white font-display">
+                    {previewShowcases[activePreviewIndex].title}
+                  </div>
+                </div>
+                <span className="text-xs font-mono text-white bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 group-hover:bg-white group-hover:text-obsidian-950 transition-all">
+                  Inspect Build →
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Minimal Horizontal Credibility Strip */}
+        <div className="pt-6 border-t border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div>
+            <div className="text-xl sm:text-2xl font-bold font-display text-white">100+</div>
+            <div className="text-[11px] font-mono text-slate-500 uppercase tracking-wider mt-0.5">Experiences Built</div>
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold font-display text-white">50+</div>
+            <div className="text-[11px] font-mono text-slate-500 uppercase tracking-wider mt-0.5">Businesses Served</div>
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold font-display text-white">0.4s</div>
+            <div className="text-[11px] font-mono text-slate-500 uppercase tracking-wider mt-0.5">Average Load Time</div>
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold font-display text-white">6+ Years</div>
+            <div className="text-[11px] font-mono text-slate-500 uppercase tracking-wider mt-0.5">Digital Craft</div>
+          </div>
+        </div>
+
+      </div>
     </section>
   );
 };

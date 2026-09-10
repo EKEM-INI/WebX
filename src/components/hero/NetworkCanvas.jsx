@@ -20,25 +20,22 @@ export const NetworkCanvas = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Nodes definition
-    const nodeCount = Math.min(36, Math.floor(width / 35));
+    const nodeCount = Math.min(28, Math.floor(width / 45));
     const nodes = [];
-    const colors = ['#00F0FF', '#818CF8', '#38BDF8', '#10B981'];
 
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2.5 + 1.5,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.5 + 1.0,
+        opacity: Math.random() * 0.5 + 0.25,
         pulse: Math.random() * Math.PI,
-        pulseSpeed: 0.02 + Math.random() * 0.03
+        pulseSpeed: 0.015 + Math.random() * 0.02
       });
     }
 
-    // Interactive cursor tracking
     let mouse = { x: -1000, y: -1000, active: false };
 
     const handleMouseMove = (e) => {
@@ -55,12 +52,11 @@ export const NetworkCanvas = () => {
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseleave', handleMouseLeave);
 
-    // Animation Loop
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Connect nodes
-      const maxDistance = 140;
+      // Subtle connections
+      const maxDistance = 150;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
@@ -68,10 +64,10 @@ export const NetworkCanvas = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDistance) {
-            const alpha = (1 - dist / maxDistance) * 0.25;
+            const alpha = (1 - dist / maxDistance) * 0.12;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.lineWidth = 0.6;
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.stroke();
@@ -79,17 +75,17 @@ export const NetworkCanvas = () => {
         }
       }
 
-      // Connect to mouse if active
+      // Gentle mouse interaction
       if (mouse.active) {
         for (let i = 0; i < nodes.length; i++) {
           const dx = nodes[i].x - mouse.x;
           const dy = nodes[i].y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 180) {
-            const alpha = (1 - dist / 180) * 0.5;
+          if (dist < 160) {
+            const alpha = (1 - dist / 160) * 0.3;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(129, 140, 248, ${alpha})`;
-            ctx.lineWidth = 1.2;
+            ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
@@ -97,31 +93,22 @@ export const NetworkCanvas = () => {
         }
       }
 
-      // Draw & update nodes
+      // Draw nodes
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
-
-        // Move
         node.x += node.vx;
         node.y += node.vy;
 
-        // Bounce
         if (node.x < 0 || node.x > width) node.vx *= -1;
         if (node.y < 0 || node.y > height) node.vy *= -1;
 
-        // Pulse
         node.pulse += node.pulseSpeed;
-        const currentRadius = node.radius + Math.sin(node.pulse) * 0.8;
+        const currentRadius = node.radius + Math.sin(node.pulse) * 0.4;
 
-        // Draw node glow
-        ctx.save();
         ctx.beginPath();
         ctx.arc(node.x, node.y, currentRadius, 0, Math.PI * 2);
-        ctx.fillStyle = node.color;
-        ctx.shadowColor = node.color;
-        ctx.shadowBlur = 12;
+        ctx.fillStyle = `rgba(255, 255, 255, ${node.opacity})`;
         ctx.fill();
-        ctx.restore();
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -140,7 +127,7 @@ export const NetworkCanvas = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto opacity-70 z-0"
+      className="absolute inset-0 w-full h-full pointer-events-auto opacity-60 z-0"
     />
   );
 };

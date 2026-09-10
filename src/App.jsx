@@ -23,14 +23,14 @@ import { AdminDrawer } from './components/admin/AdminDrawer';
 export function App() {
   return (
     <div className="min-h-screen bg-obsidian-950 text-slate-100 flex flex-col selection:bg-cyber-cyan selection:text-obsidian-950 relative">
-      {/* Top sticky announcement / status pill bar */}
-      <div className="bg-obsidian-900/90 border-b border-white/5 py-1.5 px-4 text-center text-[11px] font-mono text-slate-400 flex items-center justify-center gap-2 z-50">
-        <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan animate-pulse" />
+      {/* Top sticky subtle announcement */}
+      <div className="bg-obsidian-950/90 border-b border-white/[0.05] py-1.5 px-4 text-center text-[10px] font-mono text-slate-400 flex items-center justify-center gap-2 z-50">
+        <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan" />
         <span className="text-slate-300 font-medium">WebX by Iwaju</span>
         <span className="text-slate-600">•</span>
         <span>Digital Infrastructure for Africa & Global Enterprise</span>
         <span className="text-slate-600 hidden sm:inline">•</span>
-        <span className="text-cyber-cyan hidden sm:inline">Now Taking Q3/Q4 2026 Commissions</span>
+        <span className="text-slate-400 hidden sm:inline">Now Taking Q3/Q4 2026 Commissions</span>
       </div>
 
       {/* Main Navigation */}
