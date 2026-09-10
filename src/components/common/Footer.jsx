@@ -147,30 +147,53 @@ export const Footer = () => {
               </li>
               <li>{BRAND_CONFIG.supportPhone}</li>
               <li>{BRAND_CONFIG.location}</li>
-              <li className="pt-2 flex items-center gap-2">
-                <a
-                  href={BRAND_CONFIG.socials.x}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white hover:border-white/20 transition-colors"
-                >
-                  <span className="font-bold text-[10px]">𝕏</span>
-                </a>
+              <li>
                 <a
                   href={BRAND_CONFIG.socials.instagram}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white hover:border-white/20 transition-colors"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-300"
                 >
-                  <span className="font-bold text-[10px]">IG</span>
+                  <svg className="w-3.5 h-3.5 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>@iwajuofficial</span>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                </a>
+              </li>
+              <li className="pt-2 flex items-center gap-2">
+                <a
+                  href={BRAND_CONFIG.socials.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Follow @iwajuofficial on Instagram"
+                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-300 hover:text-pink-400 hover:border-pink-500/40 hover:bg-pink-500/10 transition-all"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+                <a
+                  href={BRAND_CONFIG.socials.x}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Follow on X"
+                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white hover:border-white/20 transition-colors"
+                >
+                  <span className="font-bold text-[11px]">𝕏</span>
                 </a>
                 <a
                   href={BRAND_CONFIG.socials.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white hover:border-white/20 transition-colors"
+                  title="Follow on LinkedIn"
+                  className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white hover:border-white/20 transition-colors"
                 >
-                  <span className="font-bold text-[10px]">IN</span>
+                  <span className="font-bold text-[11px]">IN</span>
                 </a>
               </li>
             </ul>

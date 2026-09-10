@@ -20,7 +20,7 @@ export const BRAND_CONFIG = {
   location: "Lagos • Nairobi • Global Delivery",
   socials: {
     x: "https://x.com/webx_iwaju",
-    instagram: "https://instagram.com/webx_iwaju",
+    instagram: "https://www.instagram.com/iwajuofficial?stkn=MTF5cjZsbnNhZGtxaw==",
     linkedin: "https://linkedin.com/company/webx-iwaju",
     github: "https://github.com/iwaju"
   }
