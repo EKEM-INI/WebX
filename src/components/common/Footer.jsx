@@ -4,7 +4,7 @@ import { BRAND_CONFIG } from '../../data/cmsData';
 import { Terminal, ArrowUpRight } from 'lucide-react';
 
 export const Footer = () => {
-  const { openApplication, openIwaju, toggleAdmin, setTab } = useApp();
+  const { navigateTo, toggleAdmin } = useApp();
 
   return (
     <footer className="relative bg-obsidian-950 border-t border-white/[0.06] pt-20 pb-12 overflow-hidden">
@@ -35,31 +35,31 @@ export const Footer = () => {
             </p>
           </div>
 
-          {/* Column 2: Navigation */}
+          {/* Column 2: Distinct Pages */}
           <div>
             <div className="text-[11px] font-mono uppercase tracking-widest text-slate-300 font-semibold mb-3">
-              Sections
+              Pages
             </div>
             <ul className="space-y-2 text-xs">
               <li>
                 <button
-                  onClick={() => setTab('overview')}
+                  onClick={() => navigateTo('home')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Overview
+                  Home
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setTab('services')}
+                  onClick={() => navigateTo('services')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  What We Build
+                  Services
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setTab('work')}
+                  onClick={() => navigateTo('work')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
                   Selected Work
@@ -67,25 +67,33 @@ export const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => setTab('process')}
+                  onClick={() => navigateTo('process')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  Delivery Process
+                  Process
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setTab('apply')}
+                  onClick={() => navigateTo('why-webx')}
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Why WebX
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => navigateTo('apply')}
                   className="text-white hover:underline transition-colors flex items-center gap-1"
                 >
-                  <span>Apply / Intake</span>
+                  <span>Commission Build</span>
                   <ArrowUpRight className="w-3 h-3 text-slate-400" />
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Ecosystem */}
+          {/* Column 3: Ecosystem & Sectors */}
           <div>
             <div className="text-[11px] font-mono uppercase tracking-widest text-slate-300 font-semibold mb-3">
               Ecosystem
@@ -93,7 +101,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-xs">
               <li>
                 <button
-                  onClick={() => setTab('iwaju')}
+                  onClick={() => navigateTo('about-iwaju')}
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-1"
                 >
                   <span>About Iwaju</span>
@@ -102,35 +110,27 @@ export const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => setTab('technology')}
+                  onClick={() => navigateTo('technology')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
-                  AI + Tech Radar
+                  AI + Tech
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setTab('clients')}
+                  onClick={() => navigateTo('clients')}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
                   Client Sectors
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={() => setTab('why')}
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  Why WebX
-                </button>
-              </li>
             </ul>
           </div>
 
-          {/* Column 4: Contact */}
+          {/* Column 4: Contact & Social Handles */}
           <div>
             <div className="text-[11px] font-mono uppercase tracking-widest text-slate-300 font-semibold mb-3">
-              Contact
+              Contact & Social
             </div>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>

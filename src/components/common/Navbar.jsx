@@ -3,7 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { Menu, X, ArrowUpRight, Terminal } from 'lucide-react';
 
 export const Navbar = () => {
-  const { openApplication, openIwaju, toggleAdmin, currentTab, setTab } = useApp();
+  const { currentPage, navigateTo, toggleAdmin } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -16,17 +16,16 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Services', tab: 'services' },
-    { name: 'Work', tab: 'work' },
-    { name: 'Why WebX', tab: 'why' },
-    { name: 'Process', tab: 'process' },
-    { name: 'AI + Tech', tab: 'technology' },
-    { name: 'Clients', tab: 'clients' }
+    { name: 'Services', page: 'services' },
+    { name: 'Work', page: 'work' },
+    { name: 'Why WebX', page: 'why-webx' },
+    { name: 'Process', page: 'process' },
+    { name: 'Clients', page: 'clients' }
   ];
 
-  const handleNavClick = (tabId) => {
+  const handleNavClick = (page) => {
     setMobileMenuOpen(false);
-    setTab(tabId);
+    navigateTo(page);
   };
 
   return (
@@ -34,15 +33,15 @@ export const Navbar = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'py-3.5 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/[0.08]'
+            ? 'py-3.5 bg-obsidian-950/85 backdrop-blur-2xl border-b border-white/[0.08]'
             : 'py-5 bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
+            {/* Brand Logo */}
             <button
-              onClick={() => setTab('overview')}
+              onClick={() => navigateTo('home')}
               className="flex items-center gap-3 group focus:outline-none text-left"
             >
               <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-white transition-colors group-hover:border-cyber-cyan/50">
@@ -61,14 +60,25 @@ export const Navbar = () => {
               </div>
             </button>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation Links */}
             <nav className="hidden md:flex items-center gap-1 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
+              <button
+                onClick={() => navigateTo('home')}
+                className={`px-3.5 py-1.5 text-xs font-medium transition-colors rounded-full ${
+                  currentPage === 'home'
+                    ? 'bg-white text-obsidian-950 font-semibold'
+                    : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                }`}
+              >
+                Home
+              </button>
+
               {navLinks.map((link) => {
-                const isActive = currentTab === link.tab;
+                const isActive = currentPage === link.page;
                 return (
                   <button
                     key={link.name}
-                    onClick={() => handleNavClick(link.tab)}
+                    onClick={() => handleNavClick(link.page)}
                     className={`px-3.5 py-1.5 text-xs font-medium transition-colors rounded-full ${
                       isActive
                         ? 'bg-white text-obsidian-950 font-semibold'
@@ -79,10 +89,11 @@ export const Navbar = () => {
                   </button>
                 );
               })}
+
               <button
-                onClick={() => setTab('iwaju')}
+                onClick={() => navigateTo('about-iwaju')}
                 className={`px-3.5 py-1.5 text-xs font-medium transition-colors rounded-full flex items-center gap-1 ${
-                  currentTab === 'iwaju'
+                  currentPage === 'about-iwaju'
                     ? 'bg-white text-obsidian-950 font-semibold'
                     : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
                 }`}
@@ -103,8 +114,12 @@ export const Navbar = () => {
               </button>
 
               <button
-                onClick={() => openApplication('Business Website')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold text-obsidian-950 bg-white hover:bg-slate-200 transition-all duration-200 active:scale-[0.98] shadow-sm shadow-white/10"
+                onClick={() => navigateTo('apply')}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.98] ${
+                  currentPage === 'apply'
+                    ? 'bg-cyber-cyan text-obsidian-950 shadow-glow-cyan'
+                    : 'bg-white text-obsidian-950 hover:bg-slate-200 shadow-sm shadow-white/10'
+                }`}
               >
                 <span>Build With WebX</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-obsidian-950" />
@@ -114,7 +129,7 @@ export const Navbar = () => {
             {/* Mobile trigger */}
             <div className="flex md:hidden items-center gap-2">
               <button
-                onClick={() => openApplication('Business Website')}
+                onClick={() => navigateTo('apply')}
                 className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-obsidian-950"
               >
                 Build
@@ -131,30 +146,37 @@ export const Navbar = () => {
         </div>
       </header>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-30 md:hidden bg-obsidian-950/98 backdrop-blur-2xl pt-24 px-6 pb-10 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-              Menu
+              Pages
             </div>
+            <button
+              onClick={() => handleNavClick('home')}
+              className={`block w-full text-left py-2.5 text-lg font-medium border-b border-white/[0.05] ${
+                currentPage === 'home' ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              Home
+            </button>
             {navLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => handleNavClick(link.tab)}
+                onClick={() => handleNavClick(link.page)}
                 className={`block w-full text-left py-2.5 text-lg font-medium border-b border-white/[0.05] ${
-                  currentTab === link.tab ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
+                  currentPage === link.page ? 'text-white font-bold' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {link.name}
               </button>
             ))}
             <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setTab('iwaju');
-              }}
-              className="w-full text-left py-2.5 text-lg font-medium text-slate-400 hover:text-white flex items-center justify-between border-b border-white/[0.05]"
+              onClick={() => handleNavClick('about-iwaju')}
+              className={`w-full text-left py-2.5 text-lg font-medium flex items-center justify-between border-b border-white/[0.05] ${
+                currentPage === 'about-iwaju' ? 'text-white font-bold' : 'text-slate-400 hover:text-white'
+              }`}
             >
               <span>About Iwaju</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -163,10 +185,7 @@ export const Navbar = () => {
 
           <div className="pt-6 space-y-3">
             <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                openApplication('Business Website');
-              }}
+              onClick={() => handleNavClick('apply')}
               className="w-full py-3.5 rounded-full bg-white text-obsidian-950 font-semibold text-center text-sm"
             >
               Build With WebX →

@@ -10,41 +10,54 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   // Modal states
-  const [isAppModalOpen, setIsAppModalOpen] = useState(false);
   const [initialFormNeed, setInitialFormNeed] = useState('Business Website');
   const [activeCaseStudy, setActiveCaseStudy] = useState(null);
-  const [isIwajuModalOpen, setIsIwajuModalOpen] = useState(false);
   const [isAdminDrawerOpen, setIsAdminDrawerOpen] = useState(false);
-  // Section Tab Navigation
-  const validTabs = ['overview', 'services', 'work', 'why', 'process', 'technology', 'clients', 'iwaju', 'apply'];
 
-  const getInitialTab = () => {
-    const hash = window.location.hash.replace('#', '').toLowerCase();
-    return validTabs.includes(hash) ? hash : 'overview';
+  // Multi-Page Routing State
+  const validPages = ['home', 'services', 'work', 'why-webx', 'process', 'technology', 'clients', 'about-iwaju', 'apply'];
+
+  const getInitialPage = () => {
+    const hash = window.location.hash.replace('#/', '').replace('#', '').toLowerCase();
+    return validPages.includes(hash) ? hash : 'home';
   };
 
-  const [currentTab, setCurrentTabState] = useState(getInitialTab);
+  const [currentPage, setCurrentPageState] = useState(getInitialPage);
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const setTab = (tabId, scroll = true) => {
-    const target = validTabs.includes(tabId) ? tabId : 'overview';
-    setCurrentTabState(target);
-    if (target === 'overview') {
+  const navigateTo = (page, scroll = true) => {
+    const target = validPages.includes(page) ? page : 'home';
+    if (target === currentPage) {
+      if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // Trigger sleek page load transition
+    setIsPageLoading(true);
+    setCurrentPageState(target);
+
+    if (target === 'home') {
       history.pushState(null, '', window.location.pathname);
     } else {
-      window.location.hash = target;
+      window.location.hash = `#/${target}`;
     }
+
     if (scroll) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
+
+    setTimeout(() => {
+      setIsPageLoading(false);
+    }, 280);
   };
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (validTabs.includes(hash)) {
-        setCurrentTabState(hash);
+      const hash = window.location.hash.replace('#/', '').replace('#', '').toLowerCase();
+      if (validPages.includes(hash)) {
+        setCurrentPageState(hash);
       } else if (!hash) {
-        setCurrentTabState('overview');
+        setCurrentPageState('home');
       }
     };
     window.addEventListener('hashchange', handleHashChange);
@@ -112,9 +125,7 @@ export const AppProvider = ({ children }) => {
         setIsAdminDrawerOpen(prev => !prev);
       }
       if (e.key === 'Escape') {
-        setIsAppModalOpen(false);
         setActiveCaseStudy(null);
-        setIsIwajuModalOpen(false);
         setIsAdminDrawerOpen(false);
       }
     };
@@ -124,16 +135,11 @@ export const AppProvider = ({ children }) => {
 
   const openApplication = (need = 'Business Website') => {
     setInitialFormNeed(need);
-    setIsAppModalOpen(true);
+    navigateTo('apply');
   };
-
-  const closeApplication = () => setIsAppModalOpen(false);
 
   const openCaseStudy = (project) => setActiveCaseStudy(project);
   const closeCaseStudy = () => setActiveCaseStudy(null);
-
-  const openIwaju = () => setIsIwajuModalOpen(true);
-  const closeIwaju = () => setIsIwajuModalOpen(false);
 
   const toggleAdmin = () => setIsAdminDrawerOpen(prev => !prev);
 
@@ -167,24 +173,20 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        isAppModalOpen,
+        currentPage,
+        navigateTo,
+        isPageLoading,
+        validPages,
         initialFormNeed,
         activeCaseStudy,
-        isIwajuModalOpen,
         isAdminDrawerOpen,
-        currentTab,
-        setTab,
-        validTabs,
         metrics,
         projects,
         testimonials,
         applications,
         openApplication,
-        closeApplication,
         openCaseStudy,
         closeCaseStudy,
-        openIwaju,
-        closeIwaju,
         toggleAdmin,
         submitApplication,
         updateMetricValue,
