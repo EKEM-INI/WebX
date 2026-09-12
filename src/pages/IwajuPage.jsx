@@ -50,30 +50,43 @@ export const IwajuPage = () => {
           ))}
         </div>
 
-        {/* Ecosystem Overview */}
-        <div className="mt-16 p-8 sm:p-12 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-6">
-          <div className="max-w-2xl space-y-2">
-            <h3 className="text-2xl font-bold font-display text-white">
-              The Iwaju Infrastructure Vision
-            </h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Iwaju is a pan-African technology group dedicated to building foundational digital systems across emerging markets. We operate with a 10-year view—building tools, payment conduits, and websites that empower businesses to compete globally.
-            </p>
+        {/* Ecosystem Overview with Brand Logo */}
+        <div className="mt-16 p-8 sm:p-12 rounded-2xl bg-[#06042B]/90 border border-sky-400/25 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold font-display text-white">
+                The Iwaju Infrastructure Vision
+              </h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Iwaju is a pan-African technology group dedicated to building foundational digital systems across emerging markets. WebX operates as the flagship digital presence arm—creating the websites of your dreams and powering online growth for ambitious companies.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-slate-300 pt-4 border-t border-white/[0.08]">
+              <div>Headquarters: Lagos, Nigeria • Nairobi, Kenya</div>
+              <div>Delivery: Pan-African & Global Scale</div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => navigateTo('apply')}
+                className="px-7 py-3 rounded-full bg-white text-obsidian-950 font-semibold text-xs hover:bg-slate-200 transition-all inline-flex items-center gap-2"
+              >
+                <span>Build With WebX by Iwaju</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono text-slate-300 pt-4 border-t border-white/[0.06]">
-            <div>Headquarters: Lagos, Nigeria • Nairobi, Kenya</div>
-            <div>Delivery: Pan-African & Global Scale</div>
-          </div>
-
-          <div className="pt-2">
-            <button
-              onClick={() => navigateTo('apply')}
-              className="px-7 py-3 rounded-full bg-white text-obsidian-950 font-semibold text-xs hover:bg-slate-200 transition-all inline-flex items-center gap-2"
-            >
-              <span>Build With WebX by Iwaju</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative group max-w-[260px]">
+              <div className="absolute -inset-2 bg-gradient-to-r from-sky-500/30 to-blue-600/30 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity" />
+              <img
+                src="/webx-logo-full.png"
+                alt="WebX by Iwaju — Official Logo"
+                className="relative rounded-xl border border-sky-400/30 shadow-2xl w-full h-auto"
+              />
+            </div>
           </div>
         </div>
 

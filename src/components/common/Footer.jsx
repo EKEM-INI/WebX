@@ -2,6 +2,7 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { BRAND_CONFIG } from '../../data/cmsData';
 import { Terminal, ArrowUpRight } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Footer = () => {
   const { navigateTo, toggleAdmin } = useApp();
@@ -13,22 +14,12 @@ export const Footer = () => {
           
           {/* Column 1: Brand */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-white">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 32 32" fill="none">
-                  <path d="M6 9L13 23H10L6 14L2 23H0L6 9Z" fill="#00F0FF" />
-                  <path d="M17 9L24 23H21L17 14L13 23H11L17 9Z" fill="#FFFFFF" opacity="0.9" />
-                </svg>
-              </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-base font-bold font-display text-white">
-                  WebX
-                </span>
-                <span className="text-[11px] font-mono text-slate-400 uppercase">
-                  by Iwaju
-                </span>
-              </div>
-            </div>
+            <button
+              onClick={() => navigateTo('home')}
+              className="text-left focus:outline-none group"
+            >
+              <Logo showTagline={true} />
+            </button>
 
             <p className="text-slate-400 text-xs sm:text-sm max-w-sm leading-relaxed">
               {BRAND_CONFIG.tagline} We engineer high-converting websites, bespoke online stores, and automated digital infrastructure for ambitious businesses.

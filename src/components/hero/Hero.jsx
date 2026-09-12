@@ -50,22 +50,44 @@ export const Hero = () => {
       {/* Atmospheric breathing soft aura */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[45rem] h-[45rem] bg-gradient-to-b from-cyber-cyan/[0.08] to-cyber-violet/[0.04] blur-[160px] pointer-events-none rounded-full animate-ambient" />
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10 text-center space-y-8">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10 text-center space-y-6">
         
-        {/* Minimalist Iwaju Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-300 backdrop-blur-md transition-colors hover:border-white/20 cursor-pointer"
-             onClick={() => navigateTo('about-iwaju')}>
-          <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan" />
-          <span className="text-slate-400">Powered by</span>
-          <span className="font-semibold text-white">Iwaju</span>
-          <span className="text-slate-600">•</span>
-          <span className="text-slate-400 text-[11px]">Digital Infrastructure</span>
+        {/* Brand Sphere Emblem */}
+        <div className="flex justify-center mb-1">
+          <div className="relative group cursor-pointer" onClick={() => navigateTo('services')}>
+            <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/40 via-cyan-400/30 to-blue-600/40 rounded-full blur-2xl group-hover:blur-3xl transition-all opacity-80 animate-pulse" />
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-[#06042B] border border-sky-400/40 flex items-center justify-center overflow-hidden shadow-[0_0_35px_rgba(26,181,227,0.45)]">
+              <img
+                src="/webx-sphere.png"
+                alt="WebX Brand Sphere"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Official Slogan Badge & Iwaju Affiliation */}
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#06042B]/90 border border-sky-400/30 text-xs font-mono text-sky-300 backdrop-blur-md shadow-[0_0_15px_rgba(26,181,227,0.2)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan animate-pulse" />
+            <span className="text-[10px] tracking-widest uppercase font-semibold">
+              Create The Website Of Your Dreams
+            </span>
+          </div>
+
+          <div
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-400 backdrop-blur-md transition-colors hover:border-white/20 cursor-pointer"
+            onClick={() => navigateTo('about-iwaju')}
+          >
+            <span>by</span>
+            <span className="font-semibold text-white">Iwaju</span>
+          </div>
         </div>
 
         {/* Clean, Bold Headline */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-white leading-[1.08] max-w-4xl mx-auto">
-          WE BUILD THE WEB <br />
-          <span className="text-gradient-cyan">FOR WHAT'S NEXT.</span>
+          CREATE THE WEBSITE <br />
+          <span className="text-gradient-cyan">OF YOUR DREAMS.</span>
         </h1>
 
         {/* Supporting Copy */}

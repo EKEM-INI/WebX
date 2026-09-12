@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Menu, X, ArrowUpRight, Terminal } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Navbar = () => {
   const { currentPage, navigateTo, toggleAdmin } = useApp();
@@ -42,22 +43,9 @@ export const Navbar = () => {
             {/* Brand Logo */}
             <button
               onClick={() => navigateTo('home')}
-              className="flex items-center gap-3 group focus:outline-none text-left"
+              className="group focus:outline-none text-left"
             >
-              <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/10 flex items-center justify-center text-white transition-colors group-hover:border-cyber-cyan/50">
-                <svg className="w-4 h-4" viewBox="0 0 32 32" fill="none">
-                  <path d="M6 9L13 23H10L6 14L2 23H0L6 9Z" fill="#00F0FF" />
-                  <path d="M17 9L24 23H21L17 14L13 23H11L17 9Z" fill="#FFFFFF" opacity="0.9" />
-                </svg>
-              </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-lg font-bold font-display tracking-tight text-white group-hover:text-cyber-cyan transition-colors">
-                  WebX
-                </span>
-                <span className="text-[11px] font-mono tracking-wider uppercase text-slate-400">
-                  by Iwaju
-                </span>
-              </div>
+              <Logo />
             </button>
 
             {/* Desktop Navigation Links */}
